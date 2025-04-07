@@ -2,3 +2,30 @@ FROM openjdk:17
 ADD target/spring-ms.jar spring-ms.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "spring-ms.jar"] 
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-deployment
+  labels:
+    app: spring
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring
+  
+  template:
+    metadata:
+      labels:
+        app: spring
+    spec:
+      containers:
+        - name: spring-container
+          image: 670154208195.dkr.ecr.us-east-1.amazonaws.com/spring-ms:latest
+          ports:
+            - containerPort: 8080
