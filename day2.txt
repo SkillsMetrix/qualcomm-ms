@@ -1,27 +1,71 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-deployment
+  name: nginx-deployment
   labels:
-    app: redis
+    app: nginx
 
 spec:
-  replicas: 10
+  replicas: 3
   selector:
     matchLabels:
-      app: redis
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 2
-  minReadySeconds: 10
-
+      app: nginx
+  
   template:
     metadata:
       labels:
-        app: redis
+        app: nginx
     spec:
       containers:
-        - name: redis-container
-          image: redis:5.0
+        - name: nginx-container
+          image: nginx
+          ports:
+            - containerPort: 80
+
+
+-----------------
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-1
+  labels:
+    app: nginx-1
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-1
+  
+  template:
+    metadata:
+      labels:
+        app: nginx-1
+    spec:
+      containers:
+        - name: nginx-container
+          image: cammey20/amar_custom_nginx
+          ports:
+            - containerPort: 80
+
+
+
+------
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myservice
+  labels:
+    app: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+ 
+   - port: 80
+     targetPort: 80
