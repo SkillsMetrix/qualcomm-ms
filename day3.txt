@@ -3,14 +3,14 @@ kind: VirtualService
 metadata:
   name: reviews
 spec:
-  hosts:
+  hosts: 
   - reviews
-  gateways:  
-  - bookinfo-gateway  
+  gateways: 
+  - bookinfo-gateway 
   - mesh
-  http:
-  - timeout: 1s
-  - route:
+  http: 
+  - timeout: 1s 
+    route:
     - destination:
         host: reviews
         subset: v1
