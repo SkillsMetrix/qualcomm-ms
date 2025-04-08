@@ -5,15 +5,23 @@ metadata:
 spec:
   hosts:
   - reviews
-  gateways:  
-  - bookinfo-gateway  
-  - mesh
-  http:  
+  gateways:
+  - bookinfo-gateway
+  - mesh 
+  http: 
+  - match:  
+    - headers: 
+        end-user:
+          exact: log-in-as-this-user
+    route:
+    - destination:
+        host: reviews
+        subset: v1 
   - route:
     - destination:
         host: reviews
         subset: v1
-      weight: 10 
+      weight: 10
     - destination:
         host: reviews
         subset: v2
