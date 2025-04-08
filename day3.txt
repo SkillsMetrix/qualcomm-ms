@@ -1,18 +1,14 @@
-https://github.com/istio/istio/releases/download/1.17.1/istio-1.17.1-win.zip
-kubectl install --set profile=demo -y
-curl -v $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage
-
-
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: reviews
 spec:
-  hosts:  
-  gateways: 
+  hosts:
+  - reviews
+  gateways:  
   - bookinfo-gateway  
-  - mesh 
-  http: 
+  - mesh
+  http:  
   - route:
     - destination:
         host: reviews
