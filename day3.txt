@@ -1,3 +1,21 @@
 https://github.com/istio/istio/releases/download/1.17.1/istio-1.17.1-win.zip
 kubectl install --set profile=demo -y
 curl -v $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage
+
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: reviews
+spec:
+  host: reviews  
+  subsets:  
+  - name: v1
+    labels:
+      version: v1  
+  - name: v2
+    labels:
+      version: v2 
+  - name: v3
+    labels:
+      version: v3 
