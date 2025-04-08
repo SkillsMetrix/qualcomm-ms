@@ -4,18 +4,25 @@ curl -v $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='
 
 
 apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
+kind: VirtualService
 metadata:
   name: reviews
 spec:
-  host: reviews  
-  subsets:  
-  - name: v1
-    labels:
-      version: v1  
-  - name: v2
-    labels:
-      version: v2 
-  - name: v3
-    labels:
-      version: v3 
+  hosts:  
+  gateways: 
+  - bookinfo-gateway  
+  - mesh 
+  http: 
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+      weight: 10 
+    - destination:
+        host: reviews
+        subset: v2
+      weight: 10
+    - destination:
+        host: reviews
+        subset: v3
+      weight: 80
