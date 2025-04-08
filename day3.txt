@@ -1,2 +1,3 @@
 https://github.com/istio/istio/releases/download/1.17.1/istio-1.17.1-win.zip
 kubectl install --set profile=demo -y
+curl -v $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage
