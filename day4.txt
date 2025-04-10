@@ -1,3 +1,9 @@
+
+helm install eks hashicorp/consul --version 1.0.0 --values consul-values.yaml --set global.datacenter=eks
+
+
+
+
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm install my-wordpress bitnami/wordpress
