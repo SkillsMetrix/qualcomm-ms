@@ -132,3 +132,20 @@ echo $INGRESS_HOST
 
 TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.6/security/tools/jwt/samples/demo.jwt -s)
 echo $TOKEN
+
+
+
+
+
+curl $INGRESS_HOST/headers -v
+  514  curl $INGRESS_HOST/headers -V
+  515  SECURE_INGRESS_PORT=443
+  516  export INGRESS_HOST=$(echo $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'))
+  517  echo $INGRESS_HOST
+  518  curl $INGRESS_HOST/headers -v
+  519  curl --header "Authorization: Bearer dsdsdsdsd " $INGRESS_HOST/headers -v
+  520  TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.6/security/tools/jwt/samples/demo.jwt -s)
+  521  echo $TOKEN
+  522  curl --header "Authorization: Bearer $TOKEN" $INGRESS_HOST/headers -v
+  523  history
+
