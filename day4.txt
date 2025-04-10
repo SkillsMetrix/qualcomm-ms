@@ -117,3 +117,12 @@ metadata:
 spec:
   mtls:
     mode: STRICT
+
+
+
+
+
+
+SECURE_INGRESS_PORT=443
+export INGRESS_HOST=$(echo $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'))
+echo $INGRESS_HOST
