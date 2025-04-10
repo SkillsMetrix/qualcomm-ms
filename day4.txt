@@ -1,0 +1,7 @@
+istioctl profile list
+	 istioctl install --set profile=demo -y
+kubectl get ns
+kubectl get get po -n istio-system
+kubectl label namespace default istio-injection=enabled
+
+kubectl get ns --show-labels
