@@ -64,3 +64,10 @@ kubectl create -n istio-system \
 
 curl -k -v \
     https://$(echo $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage)
+
+
+kubectl run curl \
+    --restart Never \
+    --image curlimages/curl \
+    --dry-run -o yaml \
+    -- /bin/sh -c "sleep infinity" > pod_curl.yaml
