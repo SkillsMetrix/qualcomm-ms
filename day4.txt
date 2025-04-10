@@ -99,3 +99,21 @@ status: {}
 
 
 kubectl run curl --restart Never --image curlimages/curl -n non-istio --dry-run -o yaml -- /bin/sh -c "sleep infinity" > pod_curl_non_istio.yaml
+
+
+
+
+
+
+----
+
+
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system # global
+  # namespace: default # namespace-wide policy
+spec:
+  mtls:
+    mode: STRICT
