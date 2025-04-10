@@ -29,3 +29,54 @@ spec:
           image: 670154208195.dkr.ecr.us-east-1.amazonaws.com/spring-ms:latest
           ports:
             - containerPort: 8080
+
+
+
+pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven3'
+    }
+    environment {
+        registry = "670154208195.dkr.ecr.us-west-2.amazonaws.com/my-docker-repo"
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SkillsMetrix/springboot-app.git']])
+            }
+        }
+    stage ('Build jar') {
+          steps {
+            bat 'mvn clean install'           
+           }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry 
+        }
+      }
+    }
+    stage('Pushing to ECR') {
+     steps{  
+         script {
+                bat 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 670154208195.dkr.ecr.us-west-2.amazonaws.com'
+                bat 'docker push 670154208195.dkr.ecr.us-west-2.amazonaws.com/my-docker-repo:latest'
+         }
+        }
+      }
+    stage('K8S Deploy') {
+        steps{   
+            script {
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                bat ('kubectl apply -f  eks-deploy-k8s.yaml')
+                }
+            }
+        }
+       }
+    }
+}
+
