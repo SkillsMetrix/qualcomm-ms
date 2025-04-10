@@ -71,3 +71,26 @@ kubectl run curl \
     --image curlimages/curl \
     --dry-run -o yaml \
     -- /bin/sh -c "sleep infinity" > pod_curl.yaml
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: curl
+  name: curl
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep infinity
+    image: curlimages/curl
+    name: curl
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+
