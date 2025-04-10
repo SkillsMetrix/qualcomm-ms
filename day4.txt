@@ -59,3 +59,8 @@ kubectl create -n istio-system \
     secret tls gateway-cert-sni-dns \
     --key=istio-elb.sni.com.key.pem \
     --cert=istio-elb.sni.com.cert.pem
+
+
+
+curl -k -v \
+    https://$(echo $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage)
