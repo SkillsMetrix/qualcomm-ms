@@ -13,3 +13,5 @@ kubectl get pod,svc -n istio-system
 kubectl run nginx-webapp --image=nginx
 
  kubectl get po
+
+ curl -v $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')/productpage
