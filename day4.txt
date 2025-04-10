@@ -93,4 +93,9 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Never
 status: {}
+-----------
 
+
+
+
+kubectl run curl --restart Never --image curlimages/curl -n non-istio --dry-run -o yaml -- /bin/sh -c "sleep infinity" > pod_curl_non_istio.yaml
