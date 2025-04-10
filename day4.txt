@@ -5,3 +5,11 @@ kubectl get get po -n istio-system
 kubectl label namespace default istio-injection=enabled
 
 kubectl get ns --show-labels
+
+kubectl apply -f addons
+
+kubectl get pod,svc -n istio-system
+
+kubectl run nginx-webapp --image=nginx
+
+ kubectl get po
