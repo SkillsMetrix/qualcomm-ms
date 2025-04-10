@@ -35,3 +35,27 @@ kubectl create -n istio-system \
     secret tls gateway-cert-aws-elb-dns \
     --key=istio-elb.amazonaws.com.key.pem \
     --cert=istio-elb.amazonaws.com.cert.pem
+
+
+
+
+
+
+
+
+openssl req \
+        -x509 \
+        -newkey rsa:2048 \
+        -keyout istio-elb.sni.com.key.pem \
+        -out istio-elb.sni.com.cert.pem \
+        -days 365 \
+        -nodes \
+        -subj '/CN=*.sni.com'
+
+
+
+
+kubectl create -n istio-system \
+    secret tls gateway-cert-sni-dns \
+    --key=istio-elb.sni.com.key.pem \
+    --cert=istio-elb.sni.com.cert.pem
