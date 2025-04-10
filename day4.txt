@@ -26,3 +26,6 @@ openssl req \
         -days 365 \
         -nodes \
         -subj '/CN=*.elb.amazonaws.com'
+
+
+openssl x509 -in istio-elb.amazonaws.com.cert.pem -text -noout
