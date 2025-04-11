@@ -12,6 +12,13 @@ resilience4j:
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
 
+retry:
+    instances:
+      serviceA:
+        registerHealthIndicator: true
+        maxRetryAttempts: 5
+        waitDuration: 10s
+
 
 
 
